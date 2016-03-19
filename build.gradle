@@ -1,0 +1,51 @@
+import groovy.json.JsonSlurper
+
+def runCommand(String commandToRun){
+    def proc = commandToRun.execute()
+    proc.in.eachLine { line -> }
+    proc.out.close()
+    proc.waitFor()
+}
+
+task build(){
+    doLast{
+        def slurper = new JsonSlurper()
+        def json = slurper.parseText(project.file("info.json").text)
+        json.each { id, data -> 
+            println "Processing ${id}"
+            def exeName = data.path.substring(data.path.lastIndexOf("\\")+1)
+            
+            //First, create the task scheduler tasks that will turn the program on and off
+            def createStartTask = """SchTasks /Create /RL HIGHEST /TN \"Start${id}\" /TR \"${data.path}\" /SC ONCE /ST 00:01 /F"""
+            runCommand(createStartTask)
+            def createStopTask = """SchTasks /Create /RL HIGHEST /TN \"Stop${id}\" /TR \"C:\\Windows\\System32\\taskkill.exe /F /T /IM ${exeName}\" /SC ONCE /ST 00:01 /F"""
+            runCommand(createStopTask)
+
+            //Then create the rainmeter ini file that will run those tasks
+            copy{
+                from ("template.ini")
+                into ("Skins/ProgramSwitches/${id}")
+                rename { filename ->
+                    filename = "${id.toLowerCase()}.ini"
+                }
+            }
+            def createdIniFile = project.file("Skins/ProgramSwitches/${id}/${id.toLowerCase()}.ini")
+            createdIniFile.text = createdIniFile.text.replaceAll('@StopPath@',"\"C:\\\\Windows\\\\System32\\\\schtasks.exe\" \"/run\" \"/tn\" \"Stop${id}\"")
+            createdIniFile.text = createdIniFile.text.replaceAll('@StartPath@',"\"C:\\\\Windows\\\\System32\\\\schtasks.exe\" \"/run\" \"/tn\" \"Start${id}\"")
+            createdIniFile.text = createdIniFile.text.replaceAll('@ExeToWatch@',exeName)
+
+            //Lastly, we need the on.png file so we have something to look at
+            def imageFile = project.file("Images/${id}.png")
+            if(!imageFile.exists()){
+                println "WARNING: Image '${imageFile}' does not exist"
+            }
+            copy{
+                from (imageFile)
+                into ("Skins/ProgramSwitches/${id}")
+                rename { filename ->
+                    filename = "on.png"
+                }
+            }
+        }
+    }
+}

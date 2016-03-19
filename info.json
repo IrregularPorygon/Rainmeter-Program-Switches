@@ -1,0 +1,29 @@
+{
+    "Notepad" : {
+        "path": "C:\\Windows\\System32\\notepad.exe"
+    },
+    "Skype" : {
+        "path": "C:\\Program Files (x86)\\Skype\\Phone\\Skype.exe"
+    },
+    "Dropbox" : {
+        "path": "C:\\Program Files (x86)\\Dropbox\\Client\\Dropbox.exe"
+    },
+    "KeePass" : {
+        "path": "C:\\IP Dropbox\\Dropbox\\KeePass\\KeePass.exe"
+    },
+    "MouseWithoutBorders" : {
+        "path": "C:\\Program Files (x86)\\Microsoft Garage\\Mouse without Borders\\MouseWithoutBorders.exe"
+    },
+    "Origin" : {
+        "path": "C:\\Program Files (x86)\\Origin\\Origin.exe"
+    },
+    "Steam" : {
+        "path": "S:\\Steam\\Steam.exe"
+    },
+    "UPlay" : {
+        "path": "C:\\Program Files (x86)\\Ubisoft\\Ubisoft Game Launcher\\Uplay.exe"
+    },
+    "Outlook" : {
+        "path": "C:\\Program Files\\Microsoft Office\\root\\Office16\\OUTLOOK.EXE"
+    }
+}
