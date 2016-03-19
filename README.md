@@ -7,6 +7,8 @@ Note: This is windows only
 
 First, download a zip of the repository, and extract it into your Rainmeter directory, for example: C:\Users\<User Name>\Documents\Rainmeter
 
+(You can extract it anywhere you want, if you would rather put it in another directory. The only caveat is that you'll have to manually copy the skins folder once the build is complete)
+
 Next, open up info.json. It should look something like this:
 
 ```
