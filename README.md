@@ -36,6 +36,7 @@ For every application that you list, you need a correponding image file (.png) i
 ## Running the build
 
 Once all of that's done, open up command prompt (run -> cmd) and navigate to the directory that you extraced to. (i.e. cd C:\path\to\extracted\folder)
+### IMPORTANT NOTE: Make sure you run cmd as administrator, otherwise the skins won't work!
 
 Then, run "gradlew build"
 
